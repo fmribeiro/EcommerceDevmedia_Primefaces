@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../baseadmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Bonus Created
+    </ui:define>
+    <ui:define name="content">       
+        <h3>New Bonus Created</h3>
+        <h1>BONUS CODE: #{bonusFace.selectedBonus.cupom}</h1>
+        <h:form>
+
+            <h:messages/>
+            <table>
+                <tr>
+                    <td>Percent:</td>
+                    <td><h:outputText value="#{bonusFace.selectedBonus.percent}"/>%</td>
+                </tr>
+                
+                <tr>
+                    <td>Value:</td>
+                    <td><h:outputText value="#{bonusFace.selectedBonus.valueOf}"/></td>
+                </tr>
+                
+                <tr>
+                    <td>Product:</td>
+                    <td><h:outputText value="#{bonusFace.selectedBonus.product.name}"/></td>                          
+                </tr>                
+               
+            </table>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

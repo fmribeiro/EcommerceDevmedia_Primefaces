@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./base.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:devcompos="http://java.sun.com/jsf/composite/components/devcompos">
+
+    <ui:define name="title">
+        Devmedia Ecommerce Login.
+    </ui:define>
+
+    <ui:define name="content">
+        <script type="text/javascript">
+            document.frmLogin["frmLogin:user"].focus();
+        </script>
+        <center>
+            <h:form id="frmLogin" >
+                
+                <h:panelGrid id="logingrid" columns="3">
+                    <p:focus context="logingrid"/>  
+                    <label for="user">#{labels.login_usename}</label>
+                    <p:inputText id="user"  required="true" requiredMessage="#{labels.null_username}" value="#{userFace.selectedBean.username}"/>
+                    <p:message  for="user" id="usermessage" display="text"/>
+
+                    <label for="password">#{labels.login_passwd}</label>
+                    <p:password id="password"  required="true" requiredMessage="#{labels.null_password}" value="#{userFace.selectedBean.password}"/>               
+                    <p:message display="text" id="passwordmessage" for="password" />
+                </h:panelGrid>
+                
+                <h:panelGrid columns="3">
+                    <p:commandButton update="logingrid errorlogin" style="width: 100px;" value="#{labels.btn_login}" action="#{userFace.doFinishLoginSystem}"/>
+                    <p:commandButton immediate="true" style="width: 100px;" value="#{labels.btn_cancel}" action="#{userFace.doCancel()}"/>
+                    <p:messages  id="errorlogin" for="errorlogin"/>
+                </h:panelGrid>
+            </h:form>
+        </center>
+    <!--<devcompos:confirmButton actionCancel="#{productFace.doCancel()}" actionCancelDescription="CANCEL" actionOK="#{userFace.doFinishLoginSystem}" actionOKDescription="Login"/>-->               
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,22 @@
+.ui-layout-unit .ui-layout-unit-content {
+    overflow:hidden;        
+}
+
+.ui-widget {      
+    /*font-size: 90% !important;  */
+    font-size: 10px;
+}  
+
+.ui-layout-pane {
+    border: 0;
+}
+body{
+    background-color: #003147;
+    /*#6E8B3D*/
+}
+
+.smallText { font-size: small }
+
+.reallySmallText { font-size: xx-small }
+
+#footerText { margin-top: 5px }

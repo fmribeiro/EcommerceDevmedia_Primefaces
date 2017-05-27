@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./base.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        Devmedia Ecommerce - #{productFace.selectedBean.name}
+    </ui:define>
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam required="false" name="product" value="#{productFace.selectedBean}">
+                <f:converter converterId="productConverter"/>
+            </f:viewParam>
+            <f:viewParam required="false" name="cupom" value="#{productFace.selectedCupom}">
+                <f:converter converterId="bonusConverter"/>
+            </f:viewParam>
+        </f:metadata>
+    </ui:define>
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewParam required="false" name="id" value="#{productFace.idOfViewProduct}"/>
+        </f:metadata>
+        <h:form>
+            <table>
+                <tr>
+                    <td rowspan="8">
+                        <p:graphicImage style="width: 130px;height:130px;margin-left: 20px;margin-right: 20px;margin-top: 20px;margin-bottom: 20px" library="images" name="#{productFace.selectedBean.photURL}" alt="Product Image"/>                        
+                    </td>
+                    <td>
+                        #{productFace.selectedBean.name}
+                    </td>                    
+                </tr>
+                <tr>                    
+                    <td>
+                        #{labels.productdetail_cost} <h:outputText rendered="#{!productFace.selectedProductWithValidBonusCupom}" value="#{productFace.selectedBean.cost}">
+                            <f:convertNumber type="currency"/>
+                        </h:outputText>
+
+                        <h:outputText style="text-decoration: line-through" rendered="#{productFace.selectedProductWithValidBonusCupom}" value="#{productFace.selectedBean.cost}">
+                            <f:convertNumber type="currency"/>
+                        </h:outputText><br/> 
+                        <h:outputText escape="false" value="New Coast:" rendered="#{productFace.selectedProductWithValidBonusCupom}"/>
+                        <h:outputText style="color: red" rendered="#{productFace.selectedProductWithValidBonusCupom}" value="#{productFace.costWithCupom}">
+                            <f:convertNumber type="currency"/>
+                        </h:outputText>
+                    </td>                                                                                   
+                </tr>
+                <tr>                    
+                    <td>
+                        #{labels.productdetail_stock} <h:outputText value="#{productFace.selectedBean.stock}"/>                           
+                    </td>
+                </tr>
+                <tr>                    
+                    <td>
+                        <h:link style="color: #7EC0EE" outcome="/dataGridProductsByCategory.faces?category=#{productFace.selectedBean.category.name}">    
+                            <h:outputText value="&rArr; #{productFace.selectedBean.category.name}" style="color: #7EC0EE"/>
+                        </h:link>
+                    </td>
+                </tr>
+                <tr>                   
+                    <td>
+                        #{labels.productdetail_description}<h:outputText escape="false" value="#{productFace.selectedBean.spec}">
+                            <f:convertNumber type="currency"/>
+                        </h:outputText>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <p:commandLink action="#{productFace.callOnAvaliable()}" rendered="#{productFace.selectedBean.stock eq 0}">
+                            <h:outputText escape="true" style="color: red;" value="#{labels.productdetail_unavailableitem}"/>
+                        </p:commandLink>&nbsp;&nbsp;
+                        <h:commandLink action="#{productFace.buyNow}" rendered="#{productFace.selectedBean.stock > 0}">
+                            <h:graphicImage style="width: 80px;height: 40px" library="images" name="icone_comprar.png"/>
+                        </h:commandLink>
+                    </td>                    
+                </tr>                                               
+            </table>            
+        </h:form>
+    </ui:define>
+
+</ui:composition>

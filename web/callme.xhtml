@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./base.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="title">
+        #{labels.callme_title}
+    </ui:define>
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewParam required="false" name="id" value="#{productFace.idOfViewProduct}"/>
+        </f:metadata>
+        <div id="lstsearch">
+            <c:if test="#{!userFace.userLogged}">
+                <h:form>
+                    <h3>#{labels.callme_availableonly}</h3>
+                    #{labels.callme_clickhere} <h:commandLink action="#{userFace.createNewLogin()}" value="#{labels.callme_toregister}"/> #{labels.callme_orclick} <h:commandLink action="#{userFace.doLoginSystem()}" value="#{labels.callme_here}"/> #{labels.callme_tologin} 
+                </h:form>
+            </c:if>
+            <h:form id="frmCallMe" rendered="#{userFace.userLogged}">
+                <h:messages/>
+                <div id="callMe">
+                    <table>
+                        <tr>
+                            <td colspan="2">
+                                <h3>#{labels.callme_tabletitle} </h3>
+                            </td>                       
+                        </tr>   
+
+                        <tr>
+                            <td>
+                                #{labels.callme_product}
+                            </td>
+                            <td>
+                                #{productFace.selectedBean.name}
+                            </td>
+                        </tr>   
+
+                        <tr>
+                            <td>
+                                #{labels.callme_spec}
+                            </td>
+                            <td>
+                                #{productFace.selectedBean.spec}
+                            </td>
+                        </tr>  
+
+                        <tr>
+                            <td colspan="2">
+                                <h:commandButton value="#{labels.callme_callme}" action="#{productFace.doFinishCallMe()}"/>&nbsp;
+                                <h:commandButton value="#{labels.btn_cancel}" action="#{productFace.doCancel()}"/>
+
+                            </td>                       
+                        </tr>    
+                    </table>  
+
+
+                </div>            
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

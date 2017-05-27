@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./base.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        #{labels.title_addresslist}
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frmAddressList">
+            <h:messages/>
+            <div id="addressList">
+                <p:dataTable var="item" style="width: 100%" value="#{userFace.addressesFromCurrentUser}" rendered="#{!userFace.addressesFromCurrentUser.isEmpty()}">
+                    <p:column>
+                        <f:facet name="header">
+                            #{labels.addresslist_nickname}
+                        </f:facet>
+                        #{item.nickname}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            #{labels.addresslist_address}
+                        </f:facet>
+                        #{item.address}/#{item.stateOfAddress}/#{item.country}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            #{labels.addresslist_number}
+                        </f:facet>
+                        #{item.numberOf}
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            #{labels.addresslist_action}
+                        </f:facet>
+                        <h:commandLink onclick="return confirm('#{labels.addresslist_confirm}');" action="#{userFace.doRemoveAddress}" value="#{labels.addresslist_remove}">
+                            <f:setPropertyActionListener target="#{userFace.selectedAddress}" value="#{item}"/>
+                        </h:commandLink>
+                        &nbsp;
+                        <h:commandLink action="#{userFace.doEditAddress}" value="#{labels.addresslist_edit}">
+                            <f:setPropertyActionListener target="#{userFace.selectedAddress}" value="#{item}"/>
+                        </h:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </div>            
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

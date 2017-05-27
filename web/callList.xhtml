@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./base.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        #{labels.calllist_title}
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frmCallMeList">
+            <h:messages/>
+            <div id="callMeList">
+                <h3><h:outputText value="#{labels.calllist_isempty}" rendered="#{userFace.callOnAvailableOfCurrentUser.isEmpty()}"/></h3>
+                <p:dataTable style="width: 100%;border: 0 none;" var="item" rendered="#{!userFace.callOnAvailableOfCurrentUser.isEmpty()}" 
+                             value="#{userFace.callOnAvailableOfCurrentUser}">
+
+                    <p:column>
+                        <f:facet name="header">
+                            #{labels.calllist_product}
+                        </f:facet>
+                        <center><h:outputText value="#{item.product.name}"/></center>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            #{labels.calllist_stock}
+                        </f:facet>
+                        <center><h:outputText value="#{item.product.stock}"/></center>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            #{labels.calllist_status}
+                        </f:facet>
+                        <center>
+                            <p:graphicImage style="width: 80px;height: 80px" title="#{labels.calllist_imgtitle1}" library="images" name="#{item.product.photURL}" rendered="#{!item.called}" alt="#{labels.calllist_imgtitle1}"/>
+                            <p:graphicImage title ="#{labels.calllist_imgtitle2}" library="images" name="#{item.product.photURL}" rendered="#{item.called}" alt="#{labels.calllist_imgtitle2}"/>
+                            <br/><h:outputText value="#{labels.calllist_notcalled}" rendered="#{!item.called}"/>
+                            <h:outputText value="#{labels.calllist_called}" rendered="#{item.called}"/>
+                        </center>
+                    </p:column>                    
+
+                    <p:column>
+                        <f:facet name="header">
+                            #{labels.calllist_actions}
+                        </f:facet>
+                        <center>
+                            <h:commandLink onclick="javascript:return confirm('#{labels.calllist_areyousure}')" value="#{labels.btn_cancel}" action="#{userFace.doRemoveSelectCoa()}">
+                                <f:setPropertyActionListener target="#{userFace.selectedCoa}" value="#{item}"/>
+                            </h:commandLink>
+                        </center>                        
+                    </p:column>
+
+                </p:dataTable>
+
+
+            </div>            
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

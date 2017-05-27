@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="./base.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="title">
+        Devmedia Ecommerce - #{productFace.categoryName}
+    </ui:define>
+
+    <ui:define name="content">    
+        <!--menu de categorias-->
+        <ui:define name="metadata">
+            <f:metadata>
+                <f:viewParam required="false" name="category" value="#{productFace.categoryName}"/>                    
+            </f:metadata>
+        </ui:define>
+        <h:form>
+            <p:menubar>    
+                <c:forEach var="cat" items="#{productFace.allCategories}">                    
+                    <c:choose>
+                        <c:when test="${cat.name == productFace.categoryName}">
+                            <p:menuitem actionListener="#{productFace.doListProductsByCategory()}"  outcome="/dataGridProductsByCategory.faces?category=#{cat.name}" style="width: 130px;height: 20px;background-color: #045491" value="#{cat.name}"/>            
+                        </c:when>
+                        <c:otherwise>
+                            <p:menuitem actionListener="#{productFace.doListProductsByCategory()}"  outcome="/dataGridProductsByCategory.faces?category=#{cat.name}" style="width: 130px;height: 20px;background-color: #003147;" value="#{cat.name}"/>            
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </p:menubar>
+        </h:form>
+
+
+        <!--Grid de produtos que é exibido no painel -->
+        <p:dataGrid  columns="4" value="#{productFace.productsByCategory}" paginator="false" var="item">            
+            <p:commandLink action="#{productFace.showProductDetail()}">
+                <p:graphicImage style="width: 130px;height: 130px" library="images" name="#{item.photURL}" /><br/>            
+                <f:setPropertyActionListener target="#{productFace.selectedBean}" value="#{item}"/>
+                <h:outputText value="#{item.name}"/><br/>
+                <h:outputText value="#{item.cost}"><f:convertNumber type="currency"/></h:outputText><br/><br/><br/><br/>
+            </p:commandLink>            
+        </p:dataGrid>
+    </ui:define>
+
+</ui:composition>
+

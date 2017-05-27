@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../baseadmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="title">
+        NewsLetter List
+    </ui:define>
+
+    <ui:define name="content">               
+        <h:messages/>       
+        <h2>The NewsLetter has been sended to:</h2>            
+        <h:outputText value="The Letters list is empty!" rendered="#{letterFace.letters.isEmpty()}"/>
+        <c:forEach items="#{letterFace.letters}" var="item">
+            <h:outputText value="#{item.name}" rendered="#{item.selected}"/>
+            <h:outputText value=" - " rendered="#{item.selected}"/>
+            <h:outputText value="#{item.email}" rendered="#{item.selected}"/>
+            <br/>
+
+        </c:forEach>           
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+
+
+        <h:form id="form">     
+
+            <p:autoComplete alt="#{labels.searchprimefaces_alt}" value="#{searchFace.selectedProductSearch}" id="autoCompleteProducts"
+                            completeMethod="#{searchFace.autoComplete}" title="#{labels.searchprimefaces_alt}"
+                             var="product" itemLabel="#{product.name}" itemValue="#{product.name}" converter="productConverter" 
+                             maxResults="10" queryDelay="1000" minQueryLength="3"  size="75" forceSelection="true">
+
+                <p:column style="width: 20%;text-align: center">
+                    <p:graphicImage style="width: 60px;height: 60px" library="images" name="#{product.photURL}"/>
+                </p:column>
+
+                <p:column style="width: 80%;">
+                    #{product.name}<br/>
+                    #{product.spec}
+                </p:column>
+            </p:autoComplete>
+            <p:commandButton value="#{labels.btn_search}" action="#{searchFace.doSearch()}"/>
+        </h:form>
+    </h:body>
+</html>
+

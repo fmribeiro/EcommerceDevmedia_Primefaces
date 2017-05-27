@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./base.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:devcompos="http://java.sun.com/jsf/composite/components/devcompos"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        #{labels.buyfase3_title}
+    </ui:define>
+
+    <ui:define name="content">               
+        <h:form id="frmBuyMe_fase3" rendered="#{userFace.userLogged}">                
+            <p:messages id="messages"/>
+            <div id="buyMeFase3">
+                <f:validateBean>
+                    <h3>#{labels.buyfase3_creditcard}</h3>
+                    <hr/>                
+                    #{labels.buyfase3_shipping} <h:outputText value="#{productFace.frete}"><f:convertNumber type="currency"/></h:outputText><br/>
+                    #{labels.buyfase3_total} <h:outputText value="#{productFace.totalOfSell}"><f:convertNumber type="currency"/></h:outputText>
+                    <hr/>
+                    <h3>#{labels.buyfase3_ccdetails}</h3>
+                    <p:panelGrid columns="2">                        
+                        <label for="creditCardFlag" title="Flag">#{labels.buyfase3_flag}</label>
+                        <p:selectOneMenu id="creditCardFlag" value="#{productFace.creditCardToUse.flag}" required="true" requiredMessage="#{labels.buyfase3_flagrequired}" label="Flag">                                                     
+                            <f:selectItems id="creditCard" value="#{productFace.flagsToCreditCard}" var="item" itemLabel="#{item}" itemValue="#{item}"/>
+                        </p:selectOneMenu><br/>
+
+                        <label for="creditCardTimes"  title="#{labels.buyfase3_nrtimes}">#{labels.buyfase3_nrtimes}</label>
+                        <p:selectOneMenu id="creditCardTimes" value="#{productFace.creditCardToUse.times}" required="true" requiredMessage="#{labels.buyfase3_nrtimesrequired}" label="creditCardTimes">                    
+                            <f:selectItem itemLabel="1x" itemValue="1"/>
+                            <f:selectItem itemLabel="2x" itemValue="2"/>
+                            <f:selectItem itemLabel="3x" itemValue="3"/>
+                            <f:selectItem itemLabel="4x" itemValue="4"/>
+                            <f:selectItem itemLabel="5x" itemValue="5"/>
+                            <f:selectItem itemLabel="6x" itemValue="6"/>
+                            <f:selectItem itemLabel="7x" itemValue="7"/>
+                            <f:selectItem itemLabel="8x" itemValue="8"/>
+                            <f:selectItem itemLabel="9x" itemValue="9"/>
+                            <f:selectItem itemLabel="10x" itemValue="10"/>
+                            <f:selectItem itemLabel="11x" itemValue="11"/>
+                            <f:selectItem itemLabel="12x" itemValue="12"/>
+                        </p:selectOneMenu><br/>
+
+                        <label for="ownerName" title="#{labels.buyfase3_ownername}">#{labels.buyfase3_ownername}</label>
+                        <p:inputText id="ownerName" value="#{productFace.creditCardToUse.nameOfCardOwner}"/><br/>
+
+                        <label for="cardNumber" title="#{labels.buyfase3_cardnumber}">#{labels.buyfase3_cardnumber}</label>
+                        <p:inputText id="cardNumber" value="#{productFace.creditCardToUse.number}"/><br/>
+
+                        <label for="Validation Date" title="#{labels.buyfase3_validationdate}">#{labels.buyfase3_validationdate}</label>
+                        <p:calendar id="validationDate" locale="pt_BR" navigator="true"  value="#{productFace.creditCardToUse.dateOfValidation}" pattern="MM/yyyy"/>
+                       
+                    </p:panelGrid>
+                </f:validateBean>      
+                <br/>
+                <p:commandButton transient="true" action="#{productFace.doCancel()}" value="#{labels.btn_cancel}"/>
+                <p:commandButton update="messages" action="#{productFace.gotoBuyFase4()}" value="#{labels.buyfase3_next}"/>
+                <!--<devcompos:confirmButton actionCancel="#{productFace.doCancel()}" actionCancelDescription="#{labels.btn_cancel}" actionOK="#{productFace.gotoBuyFase4()}" actionOKDescription="#{labels.buyfase3_next}"/>-->               
+                <br/>
+            </div>    
+        </h:form>       
+    </ui:define>
+
+</ui:composition>

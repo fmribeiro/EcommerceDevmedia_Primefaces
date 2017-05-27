@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://java.sun.com/xml/ns/jax-rpc/ri/config">
+	<wsdl location="file:C:\Users\Administrador\Documents\NetBeansProjects\EcommerceDevmedia_Primefaces\web\WEB-INF\wsdl/soap-server.php1.wsdl" packageName="correios"/>
+</configuration>

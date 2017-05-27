@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../baseadmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Bonus Edition
+    </ui:define>
+    <ui:define name="content">       
+        <h2>Edit #{bonusFace.selectedBonus.product.name} bonus</h2>
+        <h:form>
+
+            <h:messages/>
+            <table>
+                <tr>
+                    <td>Bonus Code</td>
+                    <td><strong><h:outputText value="#{bonusFace.selectedBonus.cupom}"/></strong></td>
+                </tr>
+                
+                <tr>
+                    <td>Bonus Percent</td>
+                    <td><h:inputText value="#{bonusFace.selectedBonus.percent}"/></td>
+                </tr>
+                
+                <tr>
+                    <td>Bonus Value</td>
+                    <td><h:inputText value="#{bonusFace.selectedBonus.valueOf}"/></td>
+                </tr>
+                
+                <tr>
+                    <td>Product</td>
+                    <td><h:selectOneMenu value="#{bonusFace.selectedBonus.product}">
+                            <f:selectItem itemValue="*All Products*" itemLabel="*All Products*"/>
+                            <f:selectItems var="prod" itemLabel="#{prod.name}" itemValue="#{prod}" value="#{productFace.allProducts}"/>
+                            <f:converter converterId="productConverter"/>
+                        </h:selectOneMenu></td>
+                </tr>
+                
+                <!--Immediate como true serve para não validar nada. -->
+                <tr>
+                    <td>
+                        <h:commandButton action="#{bonusFace.doFinishEditBonus()}" value="Save"/>
+                        <h:commandButton action="#{bonusFace.doListLastTenBonus()}" value="Cancel"/>
+                    </td>                                        
+                </tr>
+               
+            </table>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

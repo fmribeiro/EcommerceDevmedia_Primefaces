@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface displayName="The Current Basket of Itens" name="currentBasketOfItens">
+
+    </cc:interface>
+
+    <cc:implementation>
+        <p:dataTable value="#{productFace.basketOfProducts}" var="item">
+            <p:column>
+                <f:facet name="header"></f:facet>
+                <p:graphicImage style="width: 80px;height: 80px;margin-left: 20px;margin-right: 20px;margin-top: 20px;margin-bottom: 20px" library="images" name="#{item.photURL}" alt="Product Image"/>                        
+            </p:column>  
+            <p:column>
+                <f:facet name="header">#{labels.mycurrentbasketofitens_name}</f:facet>
+                #{item.name}
+            </p:column>
+            <p:column>
+                <f:facet name="header">#{labels.mycurrentbasketofitens_coast}</f:facet>
+                <h:outputText rendered="#{!item.productWithDiscount}" style="color: red;text-decoration: blink" value="#{item.cost}">
+                    <f:convertNumber type="currency"/>
+                </h:outputText>
+                <h:outputText rendered="#{item.productWithDiscount}" style="color: blueviolet;text-decoration: line-through" value="#{item.cost}">
+                    <f:convertNumber type="currency"/>
+                </h:outputText>
+                &nbsp;
+                <h:outputText rendered="#{item.productWithDiscount}" style="color: blueviolet;text-decoration: blink" value="#{item.costWithDiscount}">
+                    <f:convertNumber type="currency"/>
+                </h:outputText>
+            </p:column>
+          
+            <p:column>
+                <f:facet name="header">#{labels.mycurrentbasketofitens_category}</f:facet>                
+                <h:link style="color: #7EC0EE" outcome="/dataGridProductsByCategory.faces?category=#{item.category.name}">
+                    <h:outputText value="&rArr; #{item.category.name}" style="color: #7EC0EE">
+                        <f:convertNumber type="currency"/>
+                    </h:outputText>
+                </h:link>
+            </p:column>
+            <p:column>
+                <f:facet name="header">#{labels.mycurrentbasketofitens_spec}</f:facet>
+                <h:outputText escape="false" value="#{item.spec}"/>                   
+            </p:column>
+        </p:dataTable>            
+        <hr/>
+        <h:panelGrid style="border-style: solid;border-color: #045491;border-width: 1px;width: 100%" columns="3">
+            <label for="bonuscupom">#{labels.mycurrentbasketofitens_bonuscupom}</label>
+            <p:inputText id="bonuscupom" value="#{productFace.bonusCupomStr}"/>
+            <p:commandButton action="#{productFace.doUseBonusCupom()}" value="#{labels.mycurrentbasketofitens_usebonus}"/>
+
+            <label for="discounts">#{labels.mycurrentbasketofitens_discounts}</label>
+            <h:outputText id="discounts" value="#{productFace.totalOFDiscounts}" >
+                <f:convertNumber type="currency"/>
+            </h:outputText> 
+        </h:panelGrid>
+        <hr/>
+        <h:panelGrid style="border-style: solid;border-color: #045491;border-width: 1px;width: 100%" columns="3">
+            <label>#{labels.mycurrentbasketofitens_typepostalcode}</label>
+            <p:inputText value="#{productFace.cepToCalcFrete}" maxlength="8" size="10" required="false"/>
+            <p:commandButton action="#{productFace.doCalcFrete}" value="#{labels.mycurrentbasketofitens_calc}"/>
+
+            <label for="frete">#{labels.mycurrentbasketofitens_shipping}</label>
+            <h:outputText value="#{productFace.frete}"><f:convertNumber type="currency"/></h:outputText>
+        </h:panelGrid>
+        <hr/>
+        <table style="border-style: solid;border-color: #045491;border-width: 1px;width: 100%">
+
+            <c:if test="#{productFace.sellWithBonusCupom}">
+                <tr>
+                    <td>#{labels.mycurrentbasketofitens_bonuscupom}</td>
+                    <td style="color: red"><strong>
+                            <h:outputText rendered="#{productFace.bonusCupom.valueOf != 0}" value="#{productFace.bonusCupom.valueOf}">
+                                <f:convertNumber type="currency"/>
+                            </h:outputText>
+                            <h:outputText rendered="#{productFace.bonusCupom.valueOf == 0}" value="#{productFace.bonusCupom.percent}"/> 
+                            <h:outputText rendered="#{productFace.bonusCupom.valueOf == 0}" value="&nbsp; %" escape="false"/> 
+                        </strong></td>
+                </tr>   
+                <tr>
+                    <td>#{labels.mycurrentbasketofitens_totalwithbonus}</td>
+                    <td><strong><h:outputText value="#{productFace.totalOfSell}"/></strong></td>
+                </tr>  
+            </c:if>
+
+            <c:if test="#{!productFace.sellWithBonusCupom}">
+                <tr>
+                    <td>#{labels.mycurrentbasketofitens_total}</td>
+                    <td><strong><h:outputText value="#{productFace.totalOfSell}"/></strong></td>
+                </tr>                    
+            </c:if>
+
+            <tr>
+                <td>#{labels.mycurrentbasketofitens_totalofsell}</td>
+                <td> <strong> <h:outputText style="color: #D20005" value="#{productFace.totalOfSell}"><f:convertNumber type="currency"/></h:outputText></strong></td>                
+            </tr>
+        </table>
+
+    </cc:implementation>
+
+</html>

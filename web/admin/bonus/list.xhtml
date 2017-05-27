@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../baseadmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Bonus List
+    </ui:define>
+
+    <ui:define name="content">       
+        <h2>Last Ten Created Bonus</h2>
+        <h:form>
+            <h:dataTable border="1" var="item" value="#{bonusFace.lastTenBonus}">
+                <h:column>
+                    <f:facet name="header">
+                        Id
+                    </f:facet>
+                    #{item.id}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        Bonus Code
+                    </f:facet>
+                    #{item.cupom}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        Percent(%)
+                    </f:facet>
+                    #{item.percent}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        Valor
+                    </f:facet>
+                    <h:outputText value="#{item.valueOf}"><f:convertNumber type="currency"/></h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        Product
+                    </f:facet>
+                    <h:outputText value="#{item.product.name}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        Used
+                    </f:facet>
+                    #{bonusFace.isUsedBonus(item)}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        Actions
+                    </f:facet>
+                    <h:commandLink rendered="#{!bonusFace.isUsedBonus(item)}" action="#{bonusFace.doStartEditBonus()}" value="Edit">
+                        <f:setPropertyActionListener target="#{bonusFace.selectedBonus}" value="#{item}"/>
+                    </h:commandLink>
+                    &nbsp;<h:outputText value="/" rendered="#{!bonusFace.isUsedBonus(item)}"/>&nbsp;
+                    <h:commandLink rendered="#{!bonusFace.isUsedBonus(item)}" onclick="return confirm('Are you sure?')" action="#{bonusFace.doRemoveBonus()}" value="Remove">
+                        <f:setPropertyActionListener target="#{bonusFace.selectedBonus}" value="#{item}"/>
+                    </h:commandLink>                                               
+                </h:column>                 
+            </h:dataTable>
+            <h:commandButton action="#{bonusFace.doStartCreateBonus()}" value="Create New Bonus"/>            
+        </h:form>
+    </ui:define>
+
+</ui:composition>

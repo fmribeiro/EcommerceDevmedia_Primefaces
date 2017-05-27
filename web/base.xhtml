@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+    <h:head>        
+        <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+        <title>Devmedia Ecommerce</title>        
+        <h:outputStylesheet library="css" name="cssPrimefaces.css"/>   
+        <h:outputScript library="js" name="localePtBrPrimefaces.js"/>
+    </h:head>
+    
+    <ui:insert name="metadata"></ui:insert>
+    
+    <h:body>
+        <p:layout fullPage="false" style=" width:1320px;height:1600px;margin: 0 auto;">
+
+            <p:layoutUnit position="west" size="200" gutter="1" collapsible="true">
+                <ui:include src="left.xhtml"></ui:include>
+            </p:layoutUnit>
+
+            <p:layoutUnit gutter="1" collapsible="true" position="center">
+                <ui:insert name="content"></ui:insert>
+            </p:layoutUnit>
+
+            <p:layoutUnit gutter="1" collapsible="true" position="north"  size="175" resizable="false" closable="false" >
+                <ui:include src="top.xhtml"></ui:include>
+                <center><ui:include src="searchPrimefaces.xhtml"/></center>
+            </p:layoutUnit>
+
+            <p:layoutUnit gutter="1" collapsible="true" position="east"  size="260" >
+                <ui:include src="right.xhtml"></ui:include>
+            </p:layoutUnit>
+
+
+            <p:layoutUnit gutter="1" collapsible="true" position="south" size="40" >
+                <!--<center> Todos os direitos reservados - Ecommerce Devmedia - 2013 </center>-->                
+                <center>
+                    <p id="footerText" class="reallySmallText">
+                    <h:link value="#{labels.footer_privacy}"/>                    
+                    &nbsp;&nbsp;::&nbsp;&nbsp;
+                    <h:link value="#{labels.footer_contact}"/>                    
+                    &nbsp;&nbsp;&copy;&nbsp;&nbsp;
+                    #{labels.footer_ecommerce}</p>
+                </center>
+            </p:layoutUnit>
+
+        </p:layout>
+
+    </h:body>
+
+
+</html>
+

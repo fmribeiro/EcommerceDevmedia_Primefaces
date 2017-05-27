@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+    <h:head>        
+        <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+        <title>PrimeFaces</title>        
+
+        <style type="text/css">
+
+            .ui-layout-unit .ui-layout-unit-content {
+                overflow:hidden;                             }
+            .ui-layout-pane {
+                border: 0;
+            }
+            body{
+                background-color: #003147;
+                /*#6E8B3D*/
+            }
+
+            .smallText { font-size: small }
+
+            .reallySmallText { font-size: xx-small }
+
+            #footerText { margin-top: 5px }
+        </style>
+    </h:head>
+
+    <h:body>
+        <p:layout fullPage="false" style=" width:1320px;height:1500px">
+
+            <p:layoutUnit position="west" size="200" gutter="1" collapsible="true">
+                <ui:include src="left.xhtml"></ui:include>
+            </p:layoutUnit>
+
+            <p:layoutUnit gutter="1" collapsible="true" position="center">
+                <div id="content" class="right_content">
+                    <!--Menu de categorias que é exibido no painel central-->
+                    <p:menubar>
+                        <c:forEach var="cat" items="#{productFace.allCategories}">
+                            <p:menuitem update="gridProducts" style="width: 130px;height: 20px;background-color: #003147;" value="#{cat.name}" url="#"/>
+                        </c:forEach>
+                    </p:menubar>
+
+                    <!--Grid de produtos que é exibido no painel -->
+                    <p:dataGrid columns="2" value="#{productFace.productsToLayoutCentral}" paginator="false" var="item">
+                        <h:panelGrid id="gridProducts" columns="2">
+                            <p:graphicImage style="width: 80px;height: 80px" library="images" name="#{item.photURL}" />
+                            <p:commandLink action="#{productFace.showProductDetail()}">
+                                <f:setPropertyActionListener target="#{productFace.selectedBean}" value="#{item}"/>
+                                <h:outputText value="#{item.name}"/> - <h:outputText value="#{item.cost}"><f:convertNumber type="currency"/></h:outputText>                               
+                            </p:commandLink>
+                        </h:panelGrid>
+                    </p:dataGrid>
+
+
+                    <ui:insert name="content"></ui:insert>
+                </div>                
+            </p:layoutUnit>
+
+            <p:layoutUnit gutter="1" collapsible="true" position="north"  size="125" resizable="false" closable="false" >
+                <ui:include src="top.xhtml"></ui:include>
+                <center><ui:include src="searchPrimefaces.xhtml"/></center>
+            </p:layoutUnit>
+
+            <p:layoutUnit gutter="1" collapsible="true" position="east"  size="260" >
+                <ui:include src="right.xhtml"></ui:include>
+            </p:layoutUnit>
+
+
+            <p:layoutUnit gutter="1" collapsible="true" position="south" size="40" >                
+                <center>
+                    <p id="footerText" class="reallySmallText">
+                    <h:link value="#{labels.footer_privacy}"/>                    
+                    &nbsp;&nbsp;::&nbsp;&nbsp;
+                    <h:link value="#{labels.footer_contact}"/>                    
+                    &nbsp;&nbsp;&copy;&nbsp;&nbsp;
+                    #{labels.footer_ecommerce}</p>
+                </center>
+            </p:layoutUnit>
+
+        </p:layout>
+
+    </h:body>
+
+
+</html>
+

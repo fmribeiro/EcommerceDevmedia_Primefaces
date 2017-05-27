@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./base.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="title">
+        #{labels.viewdetails_title}
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="frmSellDetails">
+            <h:messages/>
+            <div id="sellDetails">
+                <h3>#{labels.viewdetails_selldetail} #{productFace.selectedSell.id}</h3>
+                <table>
+                    <c:forEach var="item" items="#{productFace.selectedSell.sellItens}">
+                        <tr>
+                            <td><strong>#{labels.viewdetails_name}</strong></td>
+                            <td><strong>#{labels.viewdetails_price}</strong></td>                       
+                        </tr>
+                        <tr>
+                            <td>#{item.product.name}</td>
+                            <td><h:outputText value="#{item.product.cost}"> <f:convertNumber type="currency"/></h:outputText></td>                       
+                        </tr>
+                       
+                    </c:forEach>
+                </table>
+                <hr/><br/>
+                #{labels.viewdetails_totalofsell}<td><h:outputText value="#{productFace.selectedSell.total}"> <f:convertNumber type="currency"/></h:outputText></td><br/>
+                #{labels.viewdetails_status} #{productFace.selectedSell.status.description}<br/>
+                #{labels.viewdetails_addresstosend} #{productFace.selectedSell.addressToSend.address} N&deg; #{productFace.selectedSell.addressToSend.numberOf} -
+                #{productFace.selectedSell.addressToSend.country} (#{productFace.selectedSell.addressToSend.nickname})<br/>
+            </div>          
+            <br/>
+            <h:commandLink action="#{productFace.seeSelledProducts()}" value="#{labels.viewdetails_backtosell}"/>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

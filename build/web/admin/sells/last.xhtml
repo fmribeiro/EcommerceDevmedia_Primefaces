@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../baseadmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="title">
+        Last Sells
+    </ui:define>
+
+    <ui:define name="content">       
+        <h2>Last Ten Sells</h2>
+        <h:messages/>
+        <h:form>
+            <c:if test="#{sellFace.last.isEmpty()}">
+                The Sell list is empty!                
+            </c:if>
+            <c:if test="#{!sellFace.last.isEmpty()}">
+                <h:dataTable var="item" value="#{sellFace.last}">
+                    <h:column>
+                        <f:facet name="header">
+                            Id
+                        </f:facet>
+                        #{item.id}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            Owner
+                        </f:facet>
+                        #{item.userOf.name}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            Closed
+                        </f:facet>
+                        #{item.closed}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            Date of Sell
+                        </f:facet>
+                        <h:outputText value="#{item.dateOfSell}">
+                            <f:convertDateTime pattern="dd/mm/yyyy"/>
+                        </h:outputText>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            Status
+                        </f:facet>
+                        #{item.status.description}
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            Total
+                        </f:facet>
+                        <h:outputText value="#{item.total}">
+                            <f:convertNumber type="currency" />
+                        </h:outputText>
+                    </h:column>
+                    
+                </h:dataTable>                
+            </c:if>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

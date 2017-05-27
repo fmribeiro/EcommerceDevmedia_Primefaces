@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./base.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:devcompos="http://java.sun.com/jsf/composite/components/devcompos"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        #{labels.buy_title}
+    </ui:define>
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:viewParam required="false" name="id" value="#{productFace.idOfViewProduct}"/>
+        </f:metadata>
+        <div id="lstsearch">
+            <c:if test="#{!userFace.userLogged}">
+                <h:form>
+                    <h3>#{labels.buy_formtitle}</h3>
+                    #{labels.buy_clickhere}
+                    <h:commandLink action="#{userFace.createNewLogin()}" value="#{labels.buy_toregister}">
+                        <f:setPropertyActionListener target="#{userFace.redirectURLOnLogin}" value="/buy.faces?faces-redirect=true"/>
+                    </h:commandLink>
+                    #{labels.buy_orclick}
+                    <h:commandLink action="#{userFace.doLoginSystem()}" value="#{labels.buy_here}">
+                        <f:setPropertyActionListener target="#{userFace.redirectURLOnLogin}" value="/buy.faces?faces-redirect=true"/>
+                    </h:commandLink> #{labels.buy_tologin}
+
+                </h:form>
+            </c:if>
+            <h:form id="frmBuyMe" rendered="#{userFace.userLogged}">
+                <h:messages/>
+                <div id="callMe">
+                    <h3><h:outputText value="#{labels.buy_confirmbuy} #{productFace.selectedBean.name}?"/></h3>
+                    <h:panelGrid columns="2">                        
+                        <label for="product">#{labels.buy_product}</label>
+                        <h:outputText value="#{productFace.selectedBean.name}"/>
+
+                        <label for="product">#{labels.buy_spec}</label>
+                        <h:outputText escape="false" value="#{productFace.selectedBean.spec}"/>                          
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <devcompos:confirmButton actionCancel="#{productFace.doCancel()}" actionCancelDescription="#{labels.btn_cancel}" actionOK="#{productFace.addToBasketOfProducts()}" actionOKDescription="#{labels.buy_cartcontinue}" OKJavascriptMessageAddOn="#{labels.buy_javascript}"/>                                                        
+                        <p:commandButton style="width: 160px;height: 30px" value="#{labels.buy_finishbuy}" action="#{productFace.proceedToBuy()}"/>
+                    </h:panelGrid>                    
+                </div>            
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./base.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:devcompos="http://java.sun.com/jsf/composite/components/devcompos"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        #{labels.title}
+    </ui:define>
+    <h:outputScript target="head" library="js" name="jquery-1.3.2.min.js"/>
+    <ui:define name="content">
+        <script type="text/javascript">
+            var myQuery = jQuery;
+            function makeCorreiosResponse(myValue){                
+                myQuery('#correiosWait').show();
+                myQuery.getJSON('/EcommerceDevmedia/webresources/correios/get/'+myValue.value, 
+                function (basicInfo){
+                    myQuery('input[id *= "address"]').attr('value', basicInfo.address);
+                    myQuery('input[id *= "state"]').attr('value', basicInfo.stateOfAddress);
+                    myQuery('input[id *= "number"]').focus();
+                    myQuery('#correiosWait').hide();
+                });
+            }
+        </script>
+        <h:form id="frmAddNewAddress">
+            <h:messages/>
+            <div id="addNewAddress">
+                <table>
+                    <p:messages id="messages"/>
+                    <tr>
+                        <td> 
+                            #{labels.nickname}
+                        </td>
+                        <td colspan="2">
+                            <p:inputText id="nickname" required="true" requiredMessage="Nickname cannot be empty" value="#{productFace.selectedAddressToBuy.nickname}"/>
+                        </td>
+                    </tr>                    
+
+                    <tr>
+                        <td>
+                            #{labels.postal_code}
+                        </td>
+                        <td>
+                            <p:inputText onblur="makeCorreiosResponse(this)" id="postalcode" required="true" requiredMessage="Number Code cannot be empty" value="#{productFace.selectedAddressToBuy.postalCode}"/>                            
+                        </td>
+                        <td>                            
+                            <div id="correiosWait" style="display: none">
+                                <p:graphicImage library="images" name="Wait.gif"/>#{labels.calling_wait}
+                            </div>
+                        </td>
+                    </tr>  
+
+                    <tr>
+                        <td>
+                            #{labels.address}
+                        </td>
+                        <td colspan="2">
+                            <p:inputText id="address" required="true" requiredMessage="Address Code cannot be empty" value="#{productFace.selectedAddressToBuy.address}"/>
+                        </td>
+                    </tr>  
+
+                    <tr>
+                        <td>
+                            #{labels.number}
+                        </td>
+                        <td colspan="2">
+                            <p:inputText id="number" required="true" requiredMessage="Number Code cannot be empty" value="#{productFace.selectedAddressToBuy.numberOf}"/>
+                        </td>
+                    </tr> 
+
+                    <tr>
+                        <td>
+                            #{labels.state}
+                        </td>
+                        <td colspan="2">
+                            <p:inputText id="state" required="true" requiredMessage="State cannot be empty" value="#{productFace.selectedAddressToBuy.stateOfAddress}"/>
+                        </td>
+                    </tr>  
+
+                    <tr>
+                        <td>
+                            #{labels.country}
+                        </td>
+                        <td colspan="2">
+                           
+                            <p:selectOneMenu id="country" value="#{productFace.selectedAddressToBuy.country}" required="true" requiredMessage="Postal Code cannot be empty" >
+                                <f:selectItems id="countrytype" value="#{userFace.countryTypes}" var="item" itemLabel="#{item}" itemValue="#{item}"/>
+                            </p:selectOneMenu>
+                        </td>
+                    </tr>  
+
+
+
+                    <tr>
+                        <td colspan="2">                           
+                            <p:commandButton update="messages" action="#{productFace.doFinishAddNewAddress()}" value="#{labels.add}" onclick="confirm(#{labels.javascript_add})"/>
+                            <p:commandButton immediate="true" action="#{productFace.proceedToBuy()}" value="#{labels.btn_cancel}" />
+                        </td>                       
+                    </tr>    
+                </table>                  
+                <script type="text/javascript">
+                    document.frmAddNewAddress["frmAddNewAddress:nickname"].focus();
+                </script>
+            </div>            
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

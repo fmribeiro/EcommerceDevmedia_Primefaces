@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./base.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:devcompos="http://java.sun.com/jsf/composite/components/devcompos">
+
+    <ui:define name="title">
+        #{labels.buyfinishedcc_title}
+    </ui:define>
+
+    <ui:define name="content">               
+        <h:form id="frmBuyMe_fase4" rendered="#{userFace.userLogged}">                
+            <h:messages/>
+            <div id="buyMeFase4">
+                <h3>#{labels.buyfinishedcc_summary}</h3>
+                <hr/>
+                #{labels.buyfinishedcc_shippingaddress} <h:outputText value="#{productFace.selectedAddressToBuy.address}"/><br/>
+                #{labels.buyfinishedcc_paymenttype} <h:outputText value="#{productFace.selectPaymentForm}"/><br/>
+                #{labels.buyfinishedcc_shipping} <h:outputText value="#{productFace.frete}"><f:convertNumber type="currency"/></h:outputText><br/>
+                #{labels.buyfinishedcc_total} <h:outputText value="#{productFace.totalOfSell}"><f:convertNumber type="currency"/></h:outputText>
+                <hr/>
+                <h3>#{labels.buyfinishedcc_sellid}</h3>
+                <h4>#{labels.buyfinishedcc_sellidtext}  #{productFace.selectedSell.id}.</h4>
+            </div>    
+        </h:form>       
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../baseadmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Products Addiction
+    </ui:define>
+    <ui:define name="content">       
+        <h2>Add a new Product</h2>
+        <h:form>
+            <f:validateBean>
+                <h:messages/>
+                <table>
+                    <tr>
+                        <td>Name</td>
+                        <td><h:inputText value="#{productFace.selectedBean.name}"/></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Cost</td>
+                        <td><h:inputText value="#{productFace.selectedBean.cost}"/></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Category</td>
+                        <td>
+                            <h:selectOneMenu style="width: 150px" value="#{productFace.selectedBean.category}">
+                                <f:selectItems var="itemsel" itemLabel="#{itemsel.name}" itemValue="#{itemsel}" value="#{productFace.allCategories}"/>
+                                <f:converter converterId="categoryConverter"/>
+                            </h:selectOneMenu>                        
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Photo URL</td>
+                        <td>
+                            <h:inputText value="#{productFace.selectedBean.photURL}"/>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Specification</td>
+                        <td>
+                            <h:inputTextarea cols="40" rows="5" value="#{productFace.selectedBean.spec}">
+                            </h:inputTextarea>                                    
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Iten in Stock</td>
+                        <td><h:inputText value="#{productFace.selectedBean.stock}"/></td>
+                    </tr>
+                                        
+                    <tr>
+                        <td><center><h:commandButton action="#{productFace.doFinishCreateProduct()}" value="Add New"/></center></td>
+                        <td><center><h:commandButton immediate="true" action="#{productFace.doListProducts()}" value="Cancel"/></center></td>
+                    </tr>
+                </table>
+            </f:validateBean>    
+        </h:form>
+    </ui:define>
+
+</ui:composition>

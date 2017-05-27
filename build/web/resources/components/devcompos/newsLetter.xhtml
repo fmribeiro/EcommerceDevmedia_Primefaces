@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface displayName="The Products List" name="productsList">
+
+    </cc:interface>
+
+    <cc:implementation>
+        <div id="rightbox">            
+            <h3>Devmedia Ecommerce NewsLetter</h3>
+            <hr/>
+            <h:form id="frmNews">
+                <f:validateBean>
+                    <h:messages/>
+                    <h:panelGrid columns="2">
+                        <label for="name">#{labels.newsletter_name}</label>
+                        <p:inputText size="20" id="name" value="#{letterFace.newLetter.name}"/>
+                        
+                        <label for="email">#{labels.newsletter_email}</label>
+                        <p:inputText size="20" id="email" value="#{letterFace.newLetter.email}"/>
+                        
+                        <p:commandButton value="#{labels.newlet_btn_add}" action="#{letterFace.addNewLetter()}"/>
+                    </h:panelGrid>
+                   
+                </f:validateBean>
+            </h:form>            
+        </div>       
+    </cc:implementation>
+
+</html>

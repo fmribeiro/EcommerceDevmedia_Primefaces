@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <cc:interface displayName="The User Menu" name="userMenu">
+
+    </cc:interface>
+
+    <cc:implementation>
+        <c:if test="#{userFace.userLogged}">
+            #{labels.usermenu_mymenu}
+            <hr/>
+            <div id="menu">
+                <h:form>
+                    <ul>
+                        <li><h:commandLink value="#{labels.usermenu_home}" action="#{userFace.doCancel()}"/></li>                                                
+                        <li><h:commandLink action="#{userFace.doSeeTheCallOnAvailableList()}" value="#{labels.usermenu_calllist} (#{userFace.productOnCallAvailableList})"/></li>                            
+                        <li><h:commandLink action="#{userFace.doSeeTheAddress}" value="#{labels.usermenu_addresslist} (#{userFace.addressesFromCurrentUser.size()})"/></li>
+                        <li><h:commandLink value="#{labels.usermenu_mybasket} (#{productFace.basketOfProducts.size()})" action="#{productFace.viewCart()}"/></li>                                                
+                        <li><h:commandLink value="#{labels.usermenu_currentsells} (#{productFace.sells.size()})" action="#{productFace.seeSelledProducts}"/></li>                                                
+                    </ul>                                
+                </h:form>
+            </div>
+        </c:if>
+
+    </cc:implementation>
+
+</html>

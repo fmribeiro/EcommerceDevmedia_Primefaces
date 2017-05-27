@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:body>
+        <ui:composition>
+            <div id="menu">
+                <h:form>
+                    
+                    <ul>
+                        <li>Marketing</li>
+                        <ul>
+                            <li><h:commandLink action="#{bonusFace.doStartCreateBonus()}" value="Create Bonus"/></li>                            
+                            <li><h:commandLink action="#{bonusFace.doListLastTenBonus()}" value="Last Bonus"/></li>                            
+                            <li><h:commandLink action="#{letterFace.doListNewsLetterPeoples()}" value="NewsLetter People"/></li>                            
+                        </ul>
+                    </ul>
+                    
+                    <ul>
+                        <li>Products and Categories</li>
+                        <ul>
+                            <li><h:commandLink action="#{categoryFace.doListCategories()}" value="categories"/></li>
+                            <li><h:commandLink action="#{productFace.doListProducts()}" value="Products"/></li>                        
+                        </ul>
+                    </ul>
+                    
+                    <li>Sells</li>
+                    <ul>
+                        <li><h:commandLink action="#{sellFace.doListLastSell()}" value="Last Sells"/></li>                        
+                        <li><h:commandLink action="#{sellFace.doListSellsByStatus()}" value="Sell By Status"/></li>                        
+                    </ul>
+                    <li>Site Users</li>    
+                    <ul>
+                        <li><h:commandLink action="#{userFace.doListLastUsers()}" value="Last Users"/></li>
+                        <li><h:commandLink action="#{userFace.doListMostActiveUsers()}" value="Most Active Users"/></li>
+                    </ul>
+                    <hr/>
+                    <ul>
+                        <li> <a href="/EcommerceDevmedia/ExitServlet">Logout</a> </li>                   
+                    </ul>
+                </h:form>
+            </div>
+
+        </ui:composition>
+
+    </h:body>
+
+</html>

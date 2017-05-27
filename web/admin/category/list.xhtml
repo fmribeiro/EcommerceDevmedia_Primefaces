@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../baseadmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Category List
+    </ui:define>
+
+    <ui:define name="content">       
+        <h2>Categories</h2>
+        <h:form>
+            <h:dataTable var="item" value="#{categoryFace.list}">
+                <h:column>
+                    <f:facet name="header">
+                        Id
+                    </f:facet>
+                    #{item.id}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        Name of Category
+                    </f:facet>
+                    #{item.name}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        Actions
+                    </f:facet>
+                    <h:commandLink action="#{categoryFace.doEditCategory()}" value="Edit">
+                        <f:setPropertyActionListener target="#{categoryFace.selectedBean}" value="#{item}"/>
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink onclick="return confirm('Are you sure?')" action="#{categoryFace.doRemoveCategory()}" value="Remove">
+                        <f:setPropertyActionListener target="#{categoryFace.selectedBean}" value="#{item}"/>
+                    </h:commandLink>                                               
+                </h:column>                       
+            </h:dataTable>
+            <h:commandButton action="#{categoryFace.doCreateCategory()}" value="Create New Category"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

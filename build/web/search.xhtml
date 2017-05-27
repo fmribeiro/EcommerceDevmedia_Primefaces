@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:body>
+        <ui:composition >     
+            <h:outputScript target="head" library="js" name="jquery-1.3.2.min.js"/>
+            <script type="text/javascript">
+            
+                var myQuery = jQuery;
+                function instSearch(myValue){
+                    myQuery.getJSON('/EcommerceDevmedia/webresources/product/list/'+myValue.value, 
+                    function(basicInfo) {
+                        var estouNaPagina = myQuery('#lstsearch').html() !== null;            
+                        if(estouNaPagina){
+                            var temVarios = basicInfo.product.name;            
+                            if(temVarios == undefined){                      
+                                var myHTMLTable = '<table style="width: 100%;border-style: solid;border-width: 1px;border-color: #87CEFF"><tbody>';                    
+                                $.each(basicInfo.product, function(i,item){                                                                                                            
+                                    myHTMLTable = myHTMLTable +'<tr>';
+                                    myHTMLTable = myHTMLTable +'<td rowspan="7"><a href="productDetail.faces?id='+item.id+'"> <img src="./resources/images/photo_not_available.jpg" alt="Product Image" style="margin-left: 20px;margin-right: 20px;margin-top: 20px;margin-bottom: 20px"/></a>';
+                                    myHTMLTable = myHTMLTable +'</td>';
+                                    myHTMLTable = myHTMLTable +'<td>';
+                                    myHTMLTable = myHTMLTable +''+item.name;
+                                    myHTMLTable = myHTMLTable +'</td>';
+                                    myHTMLTable = myHTMLTable +'</tr>';
+                                    myHTMLTable = myHTMLTable +'<tr>';
+                                    myHTMLTable = myHTMLTable +' <td>';
+                                    myHTMLTable = myHTMLTable +' <strong>Coast: R$'+item.cost+',00</strong>';
+                                    myHTMLTable = myHTMLTable +' </td>';
+                                    myHTMLTable = myHTMLTable +' </tr>';
+                                    myHTMLTable = myHTMLTable +'<tr>';
+                                    myHTMLTable = myHTMLTable +'<td>';
+                                    myHTMLTable = myHTMLTable +'Stock:'+item.stock;
+                                    myHTMLTable = myHTMLTable +'</td>';
+                                    myHTMLTable = myHTMLTable +'</tr>';
+                                    myHTMLTable = myHTMLTable +'<tr>';
+                                    myHTMLTable = myHTMLTable +'<td>';
+                                    myHTMLTable = myHTMLTable +'Category: '+item.category.name;
+                                    myHTMLTable = myHTMLTable +'</td>';
+                                    myHTMLTable = myHTMLTable +' </tr>';
+                                    myHTMLTable = myHTMLTable +'<tr>';
+                                    myHTMLTable = myHTMLTable +' <td>';
+                                    myHTMLTable = myHTMLTable +'Description: '+item.spec;
+                                    myHTMLTable = myHTMLTable +'</td>';
+                                    myHTMLTable = myHTMLTable +' </tr>'; 
+                                    myHTMLTable = myHTMLTable +' <tr>';
+                                    myHTMLTable = myHTMLTable +'<td>';
+                                    if(item.stock == 0 ){
+                                        myHTMLTable = myHTMLTable +'<a href="callme.faces?id='+item.id+'"><h:graphicImage style="width: 100px;height: 70px" library="images" name="sorry_out_of_stock.jpg"/></a>';                                        
+                                    }
+                                    else{
+                                        myHTMLTable = myHTMLTable +'<a href="buy.faces?id='+item.id+'"><h:graphicImage style="width: 80px;height: 40px" library="images" name="icone_comprar.png"/></a>';
+                                    }
+                                    myHTMLTable = myHTMLTable +'</td>';
+                                    myHTMLTable = myHTMLTable +' </tr>';                                         
+                                    myHTMLTable = myHTMLTable +' <tr>';
+                                    myHTMLTable = myHTMLTable +'<td><hr/></td>';
+                                    myHTMLTable = myHTMLTable +' </tr>';                                         
+                                });
+                                myQuery('#lstsearch').html(myHTMLTable);    
+                                myHTMLTable = myHTMLTable +' </tbody></table>';                                                            
+                            }else{                
+
+                                var myHTMLTable = '<table style="width: 100%;border-style: solid;border-width: 1px;border-color: #87CEFF">';                    
+                                myHTMLTable = myHTMLTable +'<tbody><tr>';
+                                myHTMLTable = myHTMLTable +'</tr><tr>';
+                                myHTMLTable = myHTMLTable +'<td rowspan="8"><a href="productDetail.faces?id='+basicInfo.product.id+'"><img src="./resources/images/photo_not_available.jpg" alt="Product Image" style="margin-left: 20px;margin-right: 20px;margin-top: 20px;margin-bottom: 20px"/></a>';
+                                myHTMLTable = myHTMLTable +'</td>';
+                                myHTMLTable = myHTMLTable +'<td>';
+                                myHTMLTable = myHTMLTable +''+basicInfo.product.name;
+                                myHTMLTable = myHTMLTable +'</td>';
+                                myHTMLTable = myHTMLTable +'</tr>';
+                                myHTMLTable = myHTMLTable +'<tr>';
+                                myHTMLTable = myHTMLTable +' <td>';
+                                myHTMLTable = myHTMLTable +' <strong>Coast: R$'+basicInfo.product.cost+',00</strong>';
+                                myHTMLTable = myHTMLTable +' </td>';
+                                myHTMLTable = myHTMLTable +' </tr>';
+                                myHTMLTable = myHTMLTable +'<tr>';
+                                myHTMLTable = myHTMLTable +'<td>';
+                                myHTMLTable = myHTMLTable +'Stock:'+basicInfo.product.stock;
+                                myHTMLTable = myHTMLTable +'</td>';
+                                myHTMLTable = myHTMLTable +'</tr>';
+                                myHTMLTable = myHTMLTable +'<tr>';
+                                myHTMLTable = myHTMLTable +'<td>';
+                                myHTMLTable = myHTMLTable +'Category: '+basicInfo.product.category.name;
+                                myHTMLTable = myHTMLTable +'</td>';
+                                myHTMLTable = myHTMLTable +' </tr>';
+                                myHTMLTable = myHTMLTable +'<tr>';
+                                myHTMLTable = myHTMLTable +' <td>';
+                                myHTMLTable = myHTMLTable +'Description: '+basicInfo.product.spec;
+                                myHTMLTable = myHTMLTable +'</td>';
+                                myHTMLTable = myHTMLTable +' </tr>';                
+                                myHTMLTable = myHTMLTable +' <tr>';
+                                myHTMLTable = myHTMLTable +'<td>';
+                                if(basicInfo.product.stock == 0 ){
+                                    myHTMLTable = myHTMLTable +'<a href="callme.faces?id='+basicInfo.product.id+'"><h:graphicImage style="width: 100px;height: 70px" library="images" name="sorry_out_of_stock.jpg"/></a>';
+                                }
+                                else{
+                                    myHTMLTable = myHTMLTable +'<a href="buy.faces?id='+basicInfo.product.id+'"><h:graphicImage style="width: 80px;height: 40px" library="images" name="icone_comprar.png"/></a>';
+                                }
+                                myHTMLTable = myHTMLTable +'</td>';
+                                myHTMLTable = myHTMLTable +'<td><hr/></td>';
+                                myHTMLTable = myHTMLTable +' </tr>';
+                                myHTMLTable = myHTMLTable +' </tbody></table>';
+                                myQuery('#lstsearch').html(myHTMLTable);
+                            }
+                        }
+                    });
+                }
+            </script>
+            <h:form id="frmSearch">
+                <label for="searchField" style="width: 75%;margin: 20px 20px 20px 20px">
+                    #{labels.search_search}
+                </label>
+                <h:inputText onkeyup="javascript:instSearch(this);" id="searchField" value="#{searchFace.searchTerm}" maxlength="255" style="width: 75%;margin: 20px 20px 20px 1px"/>
+                <h:commandButton value="#{labels.search_searchonsite}" action="#{searchFace.doSearch()}"/>
+            </h:form>            
+        </ui:composition>
+
+    </h:body>
+
+</html>

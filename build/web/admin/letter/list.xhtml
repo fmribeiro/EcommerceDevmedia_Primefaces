@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../baseadmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="title">
+        NewsLetter List
+    </ui:define>
+
+    <ui:define name="content">               
+        <h:messages/>
+        <h:form id="frmListSells">
+            <h2>Peoples added to NewsLetter</h2>            
+            <h:outputText value="The Letters list is empty!" rendered="#{letterFace.letters.isEmpty()}"/>
+            <h:dataTable rendered="#{!letterFace.letters.isEmpty()}" var="item" value="#{letterFace.letters}">
+                <h:column>
+                    <f:facet name="header">
+                        Select
+                    </f:facet>
+                    <h:selectBooleanCheckbox value="#{item.selected}"/>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">
+                        Id
+                    </f:facet>
+                    #{item.id}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        Name
+                    </f:facet>
+                    #{item.name}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        Email
+                    </f:facet>
+                    #{item.email}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        Actions
+                    </f:facet>
+                    <h:commandLink onclick="return confirm('Are you sure?');" action="#{letterFace.doRemoveLetter()}" value="Remove">
+                        <f:setPropertyActionListener target="#{letterFace.selectedLetter}" value="#{item}"/>
+                    </h:commandLink>                       
+                </h:column>                       
+            </h:dataTable>    
+            
+            <h2>News Letter Mail</h2>
+            <h:inputTextarea rows="40" cols="80" value="#{letterFace.letterMail}"/>
+            <br/>
+            <h:commandButton action="#{letterFace.doSendNewsLetter()}" value="Send News Letter"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
